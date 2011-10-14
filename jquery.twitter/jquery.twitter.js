@@ -1,14 +1,16 @@
 (function($) {
-	/*
-		jquery.twitter.js v1.5
-		Last updated: 08 July 2009
+	   /*
+		jquery.twitter.js v1.5.1
+		Last updated: 13 Oct 2011
 
 		Created by Damien du Toit
 		http://coda.co.za/blog/2008/10/26/jquery-plugin-for-twitter
-
+		
+		Updated by Jeremy Race
+		
 		Licensed under a Creative Commons Attribution-Non-Commercial 3.0 Unported License
 		http://creativecommons.org/licenses/by-nc/3.0/
-	*/
+	   */
 
 	$.fn.getTwitter = function(options) {
 
@@ -59,46 +61,46 @@
 			// show container element
 			c.show();
 
-			$.getScript("http://twitter.com/javascripts/blogger.js");
-			$.getScript("http://twitter.com/statuses/user_timeline/"+o.userName+".json?callback=twitterCallback2&count="+o.numTweets, function() {
-				// remove preLoader from container element
-				$(preLoaderHTML).remove();
+			$.getScript("http://twitter.com/javascripts/blogger.js", function() {
+                $.getScript("http://twitter.com/statuses/user_timeline/"+o.userName+".json?callback=twitterCallback2&count="+o.numTweets, function() {
+                    // remove preLoader from container element
+                    $(preLoaderHTML).remove();
 
-				// remove timestamp and move to title of list item
-				if (!o.showTimestamp) {
-					tl.find("li").each(function() {
-						var timestampHTML = $(this).children("a");
-						var timestamp = timestampHTML.html();
-						timestampHTML.remove();
-						$(this).attr("title", timestamp);
-					});
-				}
+                    // remove timestamp and move to title of list item
+                    if (!o.showTimestamp) {
+                        tl.find("li").each(function() {
+                            var timestampHTML = $(this).children("a");
+                            var timestamp = timestampHTML.html();
+                            timestampHTML.remove();
+                            $(this).attr("title", timestamp);
+                        });
+                    }
 
-				// show twitter list
-				if (o.slideIn) {
-					// a fix for the jQuery slide effect
-					// Hat-tip: http://blog.pengoworks.com/index.cfm/2009/4/21/Fixing-jQuerys-slideDown-effect-ie-Jumpy-Animation
-					var tlHeight = tl.data("originalHeight");
+                    // show twitter list
+                    if (o.slideIn) {
+                        // a fix for the jQuery slide effect
+                        // Hat-tip: http://blog.pengoworks.com/index.cfm/2009/4/21/Fixing-jQuerys-slideDown-effect-ie-Jumpy-Animation
+                        var tlHeight = tl.data("originalHeight");
 
-					// get the original height
-					if (!tlHeight) {
-						tlHeight = tl.show().height();
-						tl.data("originalHeight", tlHeight);
-						tl.hide().css({height: 0});
-					}
+                        // get the original height
+                        if (!tlHeight) {
+                            tlHeight = tl.show().height();
+                            tl.data("originalHeight", tlHeight);
+                            tl.hide().css({height: 0});
+                        }
 
-					tl.show().animate({height: tlHeight}, o.slideDuration);
-				}
-				else {
-					tl.show();
-				}
+                        tl.show().animate({height: tlHeight}, o.slideDuration);
+                    } else {
+                        tl.show();
+                    }
 
-				// add unique class to first list item
-				tl.find("li:first").addClass("firstTweet");
+                    // add unique class to first list item
+                    tl.find("li:first").addClass("firstTweet");
 
-				// add unique class to last list item
-				tl.find("li:last").addClass("lastTweet");
-			});
-		});
+                    // add unique class to last list item
+                    tl.find("li:last").addClass("lastTweet");
+                });
+            });
+        });
 	};
 })(jQuery);

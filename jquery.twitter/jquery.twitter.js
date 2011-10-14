@@ -1,67 +1,67 @@
 (function($) {
-	   /*
-		jquery.twitter.js v1.5.1
-		Last updated: 13 Oct 2011
+    /*
+    jquery.twitter.js v1.5.1
+    Last updated: 13 Oct 2011
 
-		Created by Damien du Toit
-		http://coda.co.za/blog/2008/10/26/jquery-plugin-for-twitter
-		
-		Updated by Jeremy Race
-		
-		Licensed under a Creative Commons Attribution-Non-Commercial 3.0 Unported License
-		http://creativecommons.org/licenses/by-nc/3.0/
-	   */
+    Created by Damien du Toit
+    http://coda.co.za/blog/2008/10/26/jquery-plugin-for-twitter
 
-	$.fn.getTwitter = function(options) {
+    Updated by Jeremy Race
 
-		$.fn.getTwitter.defaults = {
-			userName: null,
-			numTweets: 5,
-			loaderText: "Loading tweets...",
-			slideIn: true,
-			slideDuration: 750,
-			showHeading: true,
-			headingText: "Latest Tweets",
-			showProfileLink: true,
-			showTimestamp: true
-		};
+    Licensed under a Creative Commons Attribution-Non-Commercial 3.0 Unported License
+    http://creativecommons.org/licenses/by-nc/3.0/
+    */
 
-		var o = $.extend({}, $.fn.getTwitter.defaults, options);
+    $.fn.getTwitter = function(options) {
 
-		return this.each(function() {
-			var c = $(this);
+        $.fn.getTwitter.defaults = {
+            userName: null,
+            numTweets: 5,
+            loaderText: "Loading tweets...",
+            slideIn: true,
+            slideDuration: 750,
+            showHeading: true,
+            headingText: "Latest Tweets",
+            showProfileLink: true,
+            showTimestamp: true
+        };
 
-			// hide container element, remove alternative content, and add class
-			c.hide().empty().addClass("twitted");
+        var o = $.extend({}, $.fn.getTwitter.defaults, options);
 
-			// add heading to container element
-			if (o.showHeading) {
-				c.append("<h2>"+o.headingText+"</h2>");
-			}
+        return this.each(function() {
+            var c = $(this);
 
-			// add twitter list to container element
-			var twitterListHTML = "<ul id=\"twitter_update_list\"><li></li></ul>";
-			c.append(twitterListHTML);
+            // hide container element, remove alternative content, and add class
+            c.hide().empty().addClass("twitted");
 
-			var tl = $("#twitter_update_list");
+            // add heading to container element
+            if (o.showHeading) {
+                c.append("<h2>"+o.headingText+"</h2>");
+            }
 
-			// hide twitter list
-			tl.hide();
+            // add twitter list to container element
+            var twitterListHTML = "<ul id=\"twitter_update_list\"><li></li></ul>";
+            c.append(twitterListHTML);
 
-			// add preLoader to container element
-			var preLoaderHTML = $("<p class=\"preLoader\">"+o.loaderText+"</p>");
-			c.append(preLoaderHTML);
+            var tl = $("#twitter_update_list");
 
-			// add Twitter profile link to container element
-			if (o.showProfileLink) {
-				var profileLinkHTML = "<p class=\"profileLink\"><a href=\"http://twitter.com/"+o.userName+"\">http://twitter.com/"+o.userName+"</a></p>";
-				c.append(profileLinkHTML);
-			}
+            // hide twitter list
+            tl.hide();
 
-			// show container element
-			c.show();
+            // add preLoader to container element
+            var preLoaderHTML = $("<p class=\"preLoader\">"+o.loaderText+"</p>");
+            c.append(preLoaderHTML);
 
-			$.getScript("http://twitter.com/javascripts/blogger.js", function() {
+            // add Twitter profile link to container element
+            if (o.showProfileLink) {
+                    var profileLinkHTML = "<p class=\"profileLink\"><a href=\"http://twitter.com/"+o.userName+"\">http://twitter.com/"+o.userName+"</a></p>";
+                    c.append(profileLinkHTML);
+            }
+
+            // show container element
+            c.show();
+
+            $.getScript("http://twitter.com/javascripts/blogger.js", function() {
                 $.getScript("http://twitter.com/statuses/user_timeline/"+o.userName+".json?callback=twitterCallback2&count="+o.numTweets, function() {
                     // remove preLoader from container element
                     $(preLoaderHTML).remove();
@@ -102,5 +102,5 @@
                 });
             });
         });
-	};
+    };
 })(jQuery);
